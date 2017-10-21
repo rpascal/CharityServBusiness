@@ -7,7 +7,6 @@ import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms'
 import { AlertController, AlertOptions, ToastController } from 'ionic-angular';
 import { Events } from "ionic-angular";
 import { Loader } from '../../providers/loader/loader';
-
 @IonicPage({
   defaultHistory: ['LoginPage']
 })
@@ -18,6 +17,7 @@ import { Loader } from '../../providers/loader/loader';
 export class SignupPage {
 
   selectedLocation: googleLocationsDetails;
+
 
 
   signUpForm: any
@@ -80,21 +80,21 @@ export class SignupPage {
       Services: []
     }
 
+    console.log(charity)
 
 
+    // this.loader.show("Creating user...");
+    // this.AuthenticationProvider.createUserWithEmailAndPassword(charity, email, password).then(res => {
+    //   this.loader.hide()
+    //   this.navCtrl.setRoot("HomePage")
+    // }).catch(err => {
+    //   this.alertCtrl.create({
+    //     message: err,
 
-    this.loader.show("Creating user...");
-    this.AuthenticationProvider.createUserWithEmailAndPassword(charity, email, password).then(res => {
-      this.loader.hide()
-      this.navCtrl.setRoot("HomePage")
-    }).catch(err => {
-      this.alertCtrl.create({
-        message: err,
+    //   }).present();
+    //   this.loader.hide();
 
-      }).present();
-      this.loader.hide();
-
-    });
+    // });
 
   }
   public locationSelected() {
