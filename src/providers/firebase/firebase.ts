@@ -86,8 +86,12 @@ export class FirebaseProvider {
   }
 
   setItem<T extends baseInterface>(path: string, object: T) {
-    console.log(path)
     const id = this.getID();
+    const item: T = Object.assign({ id: id }, object);
+    return this.afs.collection<T>(path).doc(id).set(item);
+  }
+  
+  setItemWithID<T extends baseInterface>(id : string, path: string, object: T) {
     const item: T = Object.assign({ id: id }, object);
     return this.afs.collection<T>(path).doc(id).set(item);
   }

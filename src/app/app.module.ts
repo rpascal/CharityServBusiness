@@ -1,3 +1,7 @@
+import { Loader } from './../providers/loader/loader';
+import { AuthenticationProvider } from './../providers/authentication/authentication';
+import { ToastProvider } from './../providers/toast/toast';
+import { AlertProvider } from './../providers/alert/alert';
 import { FirebaseProvider } from './../providers/firebase/firebase';
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
@@ -34,7 +38,11 @@ import { ENVIRONMENT } from './../environments/environment.default';
     StatusBar,
     SplashScreen,
     FirebaseProvider,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AlertProvider,
+    ToastProvider,
+    AuthenticationProvider,
+    Loader
   ]
 })
 export class AppModule {}

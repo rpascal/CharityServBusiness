@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Create your Business</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <form [formGroup]="signUpForm" (ngSubmit)="createUser()">
+    <ion-list>
+      <ion-item>
+        <ion-label stacked>Business *</ion-label>
+        <ion-input type="text" formControlName="business"></ion-input>
+      </ion-item>
+      <ion-item class="form-error-list" *ngIf="signUpForm.controls.business.dirty && !signUpForm.controls.business.valid">
+        <p class="form-error" item-right *ngIf="signUpForm.controls.business.hasError('required')">
+          This is a required field.
+        </p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Email *</ion-label>
+        <ion-input #email type="email" formControlName="email"></ion-input>
+      </ion-item>
+      <ion-item class="form-error-list" *ngIf="signUpForm.controls.email.dirty && !signUpForm.controls.email.valid">
+        <p class="form-error" item-right *ngIf="signUpForm.controls.email.hasError('required')">
+          This is a required field.
+        </p>
+        <p class="form-error" item-right *ngIf="signUpForm.controls.email.hasError('email') && !signUpForm.controls.email.hasError('required')">
+          Enter valid email.
+        </p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Password *</ion-label>
+        <ion-input #password type="password" formControlName="password"></ion-input>
+      </ion-item>
+      <ion-item class="form-error-list" *ngIf="signUpForm.controls.password.dirty && !signUpForm.controls.password.valid">
+        <p class="form-error" item-right *ngIf="signUpForm.controls.password.hasError('required')">
+          This is a required field.
+        </p>
+        <p class="form-error" item-right *ngIf="signUpForm.controls.password.hasError('minlength')">
+          Password must have more than 5 characters
+        </p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Confirm password *</ion-label>
+        <ion-input type="password" formControlName="passwordConfirmation"></ion-input>
+      </ion-item>
+      <ion-item class="form-error-list" *ngIf="signUpForm.controls.passwordConfirmation.dirty && !signUpForm.controls.passwordConfirmation.valid">
+        <p class="form-error" item-right *ngIf="signUpForm.controls.passwordConfirmation.hasError('required')">
+          This is a required field.
+        </p>
+        <p class="form-error" item-right *ngIf="signUpForm.controls.passwordConfirmation.hasError('minlength')">
+          Password must have more than 5 characters
+        </p>
+        <p class="form-error" item-right *ngIf="signUpForm.hasError('notSame', 'passwords')">
+          Password do not match
+        </p>
+
+
+      </ion-item>
+      <ion-item class="form-error-list" *ngIf="signUpForm.hasError('notSame') && signUpForm.controls.passwordConfirmation.dirty && signUpForm.controls.passwordConfirmation.valid && signUpForm.controls.password.dirty && signUpForm.controls.password.valid">
+        <p class="form-error" item-right>
+          Password do not match
+        </p>
+      </ion-item>
+    </ion-list>
+    <button type="submit" full ion-button block color="secondary" [disabled]="!signUpForm.valid">Sign up</button>
+  </form>
+</ion-content>
