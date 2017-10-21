@@ -80,21 +80,18 @@ export class SignupPage {
       Services: []
     }
 
-    console.log(charity)
+    this.loader.show("Creating user...");
+    this.AuthenticationProvider.createUserWithEmailAndPassword(charity, email, password).then(res => {
+      this.loader.hide()
+      this.navCtrl.setRoot("HomePage")
+    }).catch(err => {
+      this.alertCtrl.create({
+        message: err,
 
+      }).present();
+      this.loader.hide();
 
-    // this.loader.show("Creating user...");
-    // this.AuthenticationProvider.createUserWithEmailAndPassword(charity, email, password).then(res => {
-    //   this.loader.hide()
-    //   this.navCtrl.setRoot("HomePage")
-    // }).catch(err => {
-    //   this.alertCtrl.create({
-    //     message: err,
-
-    //   }).present();
-    //   this.loader.hide();
-
-    // });
+    });
 
   }
   public locationSelected() {
