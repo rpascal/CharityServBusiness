@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Create your Business</ion-title>
+    <ion-title>Create your Charity</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -8,17 +8,24 @@
   <form [formGroup]="signUpForm" (ngSubmit)="createUser()">
     <ion-list>
       <ion-item>
-        <ion-label stacked>Business *</ion-label>
-        <ion-input type="text" formControlName="business"></ion-input>
+        <ion-label class="red" stacked>Charity *</ion-label>
+        <ion-input type="text" formControlName="charity"></ion-input>
       </ion-item>
-      <ion-item class="form-error-list" *ngIf="signUpForm.controls.business.dirty && !signUpForm.controls.business.valid">
-        <p class="form-error" item-right *ngIf="signUpForm.controls.business.hasError('required')">
+      <ion-item class="form-error-list" *ngIf="signUpForm.controls.charity.dirty && !signUpForm.controls.charity.valid">
+        <p class="form-error" item-right *ngIf="signUpForm.controls.charity.hasError('required')">
           This is a required field.
         </p>
       </ion-item>
-
       <ion-item>
-        <ion-label stacked>Email *</ion-label>
+        <ion-label stacked>Website Address</ion-label>
+        <ion-input type="text" formControlName="url"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Phone</ion-label>
+        <ion-input type="tel" formControlName="phone"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label class="red" stacked>Email *</ion-label>
         <ion-input #email type="email" formControlName="email"></ion-input>
       </ion-item>
       <ion-item class="form-error-list" *ngIf="signUpForm.controls.email.dirty && !signUpForm.controls.email.valid">
@@ -31,7 +38,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label stacked>Password *</ion-label>
+        <ion-label class="red" stacked>Password *</ion-label>
         <ion-input #password type="password" formControlName="password"></ion-input>
       </ion-item>
       <ion-item class="form-error-list" *ngIf="signUpForm.controls.password.dirty && !signUpForm.controls.password.valid">
@@ -44,7 +51,7 @@
       </ion-item>
 
       <ion-item>
-        <ion-label stacked>Confirm password *</ion-label>
+        <ion-label class="red" stacked>Confirm password *</ion-label>
         <ion-input type="password" formControlName="passwordConfirmation"></ion-input>
       </ion-item>
       <ion-item class="form-error-list" *ngIf="signUpForm.controls.passwordConfirmation.dirty && !signUpForm.controls.passwordConfirmation.valid">
@@ -65,7 +72,20 @@
           Password do not match
         </p>
       </ion-item>
+      <ion-item>
+        <button type="button" ion-button block full color="primary" (click)="getLocationModal()">Select Location!</button>
+      </ion-item>
+      <ion-item *ngIf="locationSelected()">
+        <p class="form-error" item-right>
+          {{selectedLocation.formatted_address}}
+        </p>
+      </ion-item>
+      <ion-item class="form-error-list" *ngIf="!locationSelected()">
+        <p class="form-error" item-right>
+          Please select a location
+        </p>
+      </ion-item>
     </ion-list>
-    <button type="submit" full ion-button block color="secondary" [disabled]="!signUpForm.valid">Sign up</button>
+    <button type="submit" full ion-button block color="secondary" [disabled]="!signUpForm.valid && !locationSelected()">Sign up</button>
   </form>
 </ion-content>
