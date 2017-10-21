@@ -1,19 +1,12 @@
+import { googleLocationsDetails } from './../../models/googleLocationDetails';
 import { charity, service } from './../../models/ItemModel';
 import { AuthenticationProvider } from './../../providers/authentication/authentication';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastOptions } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastOptions, ModalController } from 'ionic-angular';
 import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms';
 import { AlertController, AlertOptions, ToastController } from 'ionic-angular';
 import { Events } from "ionic-angular";
 import { Loader } from '../../providers/loader/loader';
-
-/**
- * Generated class for the SignupPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
-
 @IonicPage({
   defaultHistory: ['LoginPage']
 })
@@ -22,6 +15,10 @@ import { Loader } from '../../providers/loader/loader';
   templateUrl: 'signup.html',
 })
 export class SignupPage {
+
+  selectedLocation: googleLocationsDetails;
+
+
 
   signUpForm: any
 
@@ -42,13 +39,16 @@ export class SignupPage {
     private formBuilder: FormBuilder,
     private loader: Loader,
     private alertCtrl: AlertController,
-    public AuthenticationProvider: AuthenticationProvider
+    public AuthenticationProvider: AuthenticationProvider,
+    public modal: ModalController
   ) { }
 
   ionViewWillLoad() {
     // Validate user registration form
     this.signUpForm = this.formBuilder.group({
-      business: ['', Validators.required],
+      charity: ['', Validators.required],
+      url: [''],
+      phone: [''],
       email: ['', this.emailValidator],
       password: ['', this.passwordValidator],
       passwordConfirmation: ['', this.passwordValidator]
@@ -63,39 +63,56 @@ export class SignupPage {
 
   createUser() {
 
-    let business = this.signUpForm.controls.business.value;
+    let charityName = this.signUpForm.controls.charity.value;
+    let url = this.signUpForm.controls.url.value;
+    let phone = this.signUpForm.controls.phone.value;
     let email = this.signUpForm.controls.email.value;
     let password = this.signUpForm.controls.password.value;
 
     let charity: charity = {
-      City : 'Lodi',
-      Name : 'Ryan Test',
-      Phone : "330-421-9134",
-      Services : [
-        "serviceKey"
-      ],
-      State: "Ohio",
-      Street : 'avon lake',
-      URL : "website.com",
-      Zip: '44254'
+      Name: charityName,
+      Phone: phone,
+      URL: url,
+      State: this.selectedLocation.State,
+      Street: this.selectedLocation.Street,
+      City: this.selectedLocation.City,
+      Zip: this.selectedLocation.Zip,
+      Services: []
     }
 
+    console.log(charity)
 
 
+    // this.loader.show("Creating user...");
+    // this.AuthenticationProvider.createUserWithEmailAndPassword(charity, email, password).then(res => {
+    //   this.loader.hide()
+    //   this.navCtrl.setRoot("HomePage")
+    // }).catch(err => {
+    //   this.alertCtrl.create({
+    //     message: err,
 
-    this.loader.show("Creating user...");
-    this.AuthenticationProvider.createUserWithEmailAndPassword(charity, email, password).then(res => {
-      this.loader.hide()
-      this.navCtrl.setRoot("HomePage")
-    }).catch(err => {
-      this.alertCtrl.create({
-        message: err,
+    //   }).present();
+    //   this.loader.hide();
 
-      }).present();
-      this.loader.hide();
+    // });
 
-    });
+  }
+  public locationSelected() {
+    return this.selectedLocation != null
+      && this.selectedLocation.formatted_address != ''
+      && this.selectedLocation.City != ''
+      && this.selectedLocation.State != ''
+      && this.selectedLocation.Street != ''
+      && this.selectedLocation.Zip != ''
+      ;
+  }
 
+  getLocationModal() {
+    let getLocation = this.modal.create("LocationPickerPage");
+    getLocation.present();
+    getLocation.onDidDismiss((data: googleLocationsDetails) => {
+      this.selectedLocation = data;
+    })
   }
 
 }

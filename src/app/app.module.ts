@@ -29,6 +29,7 @@ import { ENVIRONMENT } from './../environments/environment.default';
     AngularFireModule.initializeApp(ENVIRONMENT.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    // TextMaskModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
