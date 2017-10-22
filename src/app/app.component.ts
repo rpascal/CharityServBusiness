@@ -44,7 +44,7 @@ export class MyApp {
 
     this.pages = [
       { title: 'Home', component: 'HomePage', active: true, icon: 'home' },
-      { title: 'Profile', component: 'ProfilePage', active: false, icon: 'person' },
+      // { title: 'Profile', component: 'ProfilePage', active: false, icon: 'person' },
       { title: 'Logout', component: 'TestPage', active: false, icon: 'exit', logout: true },
 
     ];

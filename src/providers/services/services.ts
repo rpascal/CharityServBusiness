@@ -19,14 +19,22 @@ export class ServicesProvider {
 
 
   getServiceCategories() {
-    return this.firebase.getSnapshotBase<SubjectCategory>(ENVIRONMENT.firebaseDataPaths.ServiceCategories);
+    return this.afs.collection<SubjectCategory>(ENVIRONMENT.firebaseDataPaths.ServiceCategories, ref => ref.orderBy("name")).snapshotChanges().map(actions => {
+      return actions.map(a => {
+        const data = a.payload.doc.data() as SubjectCategory;
+        const id = a.payload.doc.id;
+        return Object.assign(data, { id: id });
+      })
+    });
+
+    // return this.firebase.getSnapshotBase<SubjectCategory>(ENVIRONMENT.firebaseDataPaths.ServiceCategories);
   }
 
 
   public getOwnServices<service>(): Promise<Observable<service[]>> {
     return new Promise((resolve, reject) => {
       this.AuthenticationProvider.getUserID().then(id => {
-        resolve(this.afs.collection<service>(ENVIRONMENT.firebaseDataPaths.service, ref => ref.where("charityID", "==", id).where("isActive","==", true)).snapshotChanges().map(actions => {
+        resolve(this.afs.collection<service>(ENVIRONMENT.firebaseDataPaths.service, ref => ref.where("charityID", "==", id).where("isActive", "==", true)).snapshotChanges().map(actions => {
           return actions.map(a => {
             const data = a.payload.doc.data() as service;
             const id = a.payload.doc.id;
@@ -38,7 +46,7 @@ export class ServicesProvider {
     })
   }
 
- 
+
 
 
 
