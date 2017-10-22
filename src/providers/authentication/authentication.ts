@@ -21,9 +21,12 @@ export class AuthenticationProvider {
   constructor(public angularfireAuth: AngularFireAuth,
     public db: AngularFirestore,
     public firebase: FirebaseProvider) {
+
+
+
   }
 
-  public getUserID() : Promise<string> {
+  public getUserID(): Promise<string> {
     return new Promise((resolve, reject) => {
       this.angularfireAuth.authState.take(1).subscribe(user => {
         if (user) {

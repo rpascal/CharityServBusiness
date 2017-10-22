@@ -54,5 +54,8 @@ export class HomePage {
     this.navCtrl.push("AddServicePage")
   }
 
+  viewRequests(service: service) {
+    this.navCtrl.push("ViewRequestsPage", service)
+  }
 
 }

@@ -21,7 +21,7 @@
   <ion-content padding>
 
 
-    <ion-card *ngFor='let service of services | async' >
+    <ion-card *ngFor='let service of services | async' (click)='viewRequests(service)'>
       <ion-card-header>
         {{service.Title}}
       </ion-card-header>
