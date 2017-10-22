@@ -37,7 +37,7 @@ export class RequestsProvider {
       this.afs.collection(ENVIRONMENT.firebaseDataPaths.request, ref => {
         let query = ref.where('serviceID', '==', serviceID).where("isActive", "==", true);
         if (status) { query = query.where('status', '==', status) };
-        // query  = query.orderBy("opened")
+        //  query  = query.orderBy("opened")
       
         return query;
       }).snapshotChanges().map(actions => {
