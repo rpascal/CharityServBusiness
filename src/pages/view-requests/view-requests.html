@@ -42,11 +42,11 @@
       <ion-item>
         Email : {{(request.userID | userFromId | async)?.email}}
       </ion-item>
-      <ion-item>
+      <ion-item text-wrap>
         Requested : {{request.opened | dateTimeFormat}}
       </ion-item>
 
-      <ion-item *ngIf="request.status != 'pending'">
+      <ion-item text-wrap *ngIf="request.status != 'pending'">
         Closed : {{request.closed | dateTimeFormat}}
       </ion-item>
       
