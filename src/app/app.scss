@@ -12,9 +12,14 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.transparentBackGround{
+  background: transparent !important;
+}
+
 .scroll-content,
-ion-menu,
 .menu-inner {
+  overflow-y: auto;
   background-image: url('../assets/imgs/background.png');
   background-position: initial initial;
   background-repeat: initial initial;
@@ -75,7 +80,7 @@ ion-menu,
 }
 
 .activeMenuItem {
-  background-color: #E4F1FE;
+  background-color: #E4F1FE !important;
 }
 
 .icon-badge {
