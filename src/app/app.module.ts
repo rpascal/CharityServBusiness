@@ -1,3 +1,4 @@
+import { PipesModule } from './../pipes/pipes.module';
 import { Loader } from './../providers/loader/loader';
 import { AuthenticationProvider } from './../providers/authentication/authentication';
 import { ToastProvider } from './../providers/toast/toast';
@@ -31,6 +32,7 @@ import { RequestsProvider } from '../providers/requests/requests';
     AngularFireModule.initializeApp(ENVIRONMENT.firebaseConfig),
     AngularFirestoreModule,
     AngularFireAuthModule,
+    PipesModule
     // TextMaskModule
   ],
   bootstrap: [IonicApp],

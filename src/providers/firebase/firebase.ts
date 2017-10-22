@@ -13,8 +13,8 @@ export class FirebaseProvider {
   }
 
 
-  public getDocument<T>(path : string, doc : string) : AngularFirestoreDocument<{}>{
-    return this.afs.collection<T>(path).doc(doc);
+  public getDocument<T>(path : string, doc : string) : Observable<T>{
+    return this.afs.doc<T>(`${path}/${doc}`).valueChanges();
   }
 
   public getCollectionList<T>(path: string, states?: any[]): Observable<T[]> {

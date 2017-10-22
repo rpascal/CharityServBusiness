@@ -11,6 +11,7 @@ export const ENVIRONMENT = {
   firebaseDataPaths : {
      charity : "charity",
      ServiceCategories : "ServiceCategories",
+     users : "user",
      service : "service",
      request : "requests"
   },

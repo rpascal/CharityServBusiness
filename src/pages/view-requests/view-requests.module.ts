@@ -1,3 +1,4 @@
+import { PipesModule } from './../../pipes/pipes.module';
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ViewRequestsPage } from './view-requests';
@@ -8,6 +9,7 @@ import { ViewRequestsPage } from './view-requests';
   ],
   imports: [
     IonicPageModule.forChild(ViewRequestsPage),
+    PipesModule
   ],
 })
 export class ViewRequestsPageModule {}

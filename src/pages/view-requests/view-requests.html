@@ -33,7 +33,7 @@
 
   <ion-card *ngFor='let request of requests | async'>
     <ion-card-header>
-      {{request.userID}}
+      {{(request.userID | userFromId | async)?.firstname}}
     </ion-card-header>
     <ion-card-content>
       {{request.serviceID}}
