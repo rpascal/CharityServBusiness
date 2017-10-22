@@ -4,4 +4,9 @@ export interface service extends baseInterface {
     Description : string;
     MainCategory : string;
     charityID : string;
+
+    
+    declinedCount: number;
+    acceptedCount: number;
+    pendingCount: number;
 }

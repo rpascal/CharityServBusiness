@@ -13,13 +13,13 @@
   <ion-toolbar>
     <ion-segment [(ngModel)]="currentStatus" color="secondary" (ionChange)="statusChange()">
       <ion-segment-button value="pending">
-        Pending  <ion-badge item-end>{{(charity|async)?.pendingCount}}</ion-badge>
+        Pending  <ion-badge item-end>{{(service|async)?.pendingCount}}</ion-badge>
       </ion-segment-button>
       <ion-segment-button value="accepted">
-        Accepted <ion-badge item-end>{{(charity|async)?.acceptedCount}}</ion-badge>
+        Accepted <ion-badge item-end>{{(service|async)?.acceptedCount}}</ion-badge>
       </ion-segment-button>
       <ion-segment-button value="declined">
-        Declined <ion-badge item-end>{{(charity|async)?.declinedCount}}</ion-badge>
+        Declined <ion-badge item-end>{{(service|async)?.declinedCount}}</ion-badge>
       </ion-segment-button>
 
     </ion-segment>

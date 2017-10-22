@@ -148,3 +148,75 @@ exports.updateUserCounts = functions.firestore
       });
     });
   });
+
+
+
+exports.updateServiceCounts = functions.firestore
+.document('requests/{requestsId}')
+.onWrite(event => {
+  // Get value of the newly added rating
+
+  var status = '';
+  if (event.data.exists) {
+    status = event.data.get('status');
+  }
+
+  // var status = event.data.get('status');
+  var oldStatus = '';
+  if (event.data.previous) {
+    oldStatus = event.data.previous.get("status");
+  }
+
+
+
+  var serviceID = event.data.get('serviceID');
+
+  /** charity : "charity",
+       ServiceCategories : "ServiceCategories",
+       users : "user",
+       service : "service",
+       request : "requests" */
+  //'accepted' | 'declined' | 'pending'
+
+
+
+  var serviceRef = admin.firestore().collection('service').doc(serviceID);
+
+  // Update aggregations in a transaction
+  return admin.firestore().runTransaction(transaction => {
+    return transaction.get(serviceRef).then(serviceDoc => {
+      // Compute new number of ratings
+      // var old
+      var pendingCount = serviceDoc.get('pendingCount') || 0;
+      var acceptedCount = serviceDoc.get('acceptedCount') || 0;
+      var declinedCount = serviceDoc.get('declinedCount') || 0;
+
+      if (oldStatus == "pending") {
+        pendingCount = pendingCount == 0 ? 0 : --pendingCount
+      } else if (oldStatus == "declined") {
+        declinedCount = declinedCount == 0 ? 0 : --declinedCount
+      } else if (oldStatus == "accepted") {
+        acceptedCount = acceptedCount == 0 ? 0 : --acceptedCount
+      }
+
+
+
+      if (status == "pending") {
+        pendingCount = ++pendingCount
+      } else if (status == "declined") {
+        declinedCount = ++declinedCount
+      } else if (status == "accepted") {
+        acceptedCount = ++acceptedCount
+      }
+
+
+
+      return transaction.update(serviceRef, {
+        declinedCount: declinedCount,
+        acceptedCount: acceptedCount,
+        pendingCount: pendingCount
+      });
+
+    });
+  });
+});

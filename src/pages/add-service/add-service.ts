@@ -61,7 +61,10 @@ export class AddServicePage {
         Description: description,
         MainCategory: category,
         charityID: id,
-        isActive : true
+        isActive : true,
+        acceptedCount : 0,
+        declinedCount : 0,
+        pendingCount : 0
       }
 
 

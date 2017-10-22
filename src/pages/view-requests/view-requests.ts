@@ -1,3 +1,5 @@
+import { ENVIRONMENT } from './../../environments/environment.default';
+import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { AuthenticationProvider } from './../../providers/authentication/authentication';
 import { charity } from './../../models/charity';
 import { RequestsProvider } from './../../providers/requests/requests';
@@ -6,13 +8,6 @@ import { Observable } from 'rxjs/Observable';
 import { service } from './../../models/service';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the ViewRequestsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -27,18 +22,21 @@ export class ViewRequestsPage {
 
   requests: Observable<request[]>
 
-  charity: Observable<charity>;
+  service: Observable<service>;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     public RequestsProvider: RequestsProvider,
-    public AuthenticationProvider: AuthenticationProvider) {
+    public AuthenticationProvider: AuthenticationProvider,
+    public firebase: FirebaseProvider) {
     this.selectedService = navParams.data;
     this.requests = this.RequestsProvider.getRequest(this.selectedService.id);
 
-    this.AuthenticationProvider.getCurrentCharity().then(x => {
-      this.charity = x;
-    })
+    this.service =this.firebase.getDocument(ENVIRONMENT.firebaseDataPaths.service, this.selectedService.id);
+
+    // this.AuthenticationProvider.getCurrentCharity().then(x => {
+    //   this.charity =x;
+    // })
 
   }
 
