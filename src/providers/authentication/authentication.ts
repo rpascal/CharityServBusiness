@@ -73,7 +73,9 @@ export class AuthenticationProvider {
     return new Promise((resolve, reject) => {
       this.angularfireAuth.authState.subscribe(user => {
         if (user)
-          resolve(true)
+          this.firebase.checkExist(ENVIRONMENT.firebaseDataPaths.charity, user.uid).then(val => {
+            resolve(val)
+          })
         else
           resolve(false)
       })

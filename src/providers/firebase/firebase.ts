@@ -17,6 +17,14 @@ export class FirebaseProvider {
     return this.afs.doc<T>(`${path}/${doc}`).valueChanges();
   }
 
+  public checkExist(path: string, doc: string): Promise<boolean> {
+    return new Promise((resolve) => {
+      this.afs.doc(`${path}/${doc}`).ref.get().then(x => {
+        resolve(x.exists)
+      })
+    })
+  }
+
   public getCollectionList<T>(path: string, states?: any[]): Observable<T[]> {
     // .valueChanges() is simple. It just returns the 
     // JSON data without metadata. If you need the 
