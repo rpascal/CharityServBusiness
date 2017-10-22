@@ -81,6 +81,7 @@ export class SignupPage {
       City: this.selectedLocation.City,
       Zip: this.selectedLocation.Zip,
       Services: [],
+      email : email,
       isActive : true
     }
 

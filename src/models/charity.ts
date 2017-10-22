@@ -7,5 +7,6 @@ export interface charity extends baseInterface {
     City: string;
     Zip: string;
     Services: string[];
-    URL : string;
+    URL: string;
+    email: string;
 }

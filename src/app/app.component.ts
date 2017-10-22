@@ -1,3 +1,8 @@
+import { charity } from './../models/charity';
+import { ENVIRONMENT } from './../environments/environment.default';
+import { Observable } from 'rxjs/Observable';
+import { UserModel } from './../models/user';
+import { FirebaseProvider } from './../providers/firebase/firebase';
 import { AuthenticationProvider } from './../providers/authentication/authentication';
 import { AlertProvider } from './../providers/alert/alert';
 import { Component, ViewChild } from '@angular/core';
@@ -14,6 +19,9 @@ import { Subject } from 'rxjs';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
+
+  curUser: Observable<charity>;
+  userID: string;
   rootPage: any = "HomePage";
 
   activePage = new Subject();
@@ -24,7 +32,8 @@ export class MyApp {
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen,
     public alert: AlertProvider,
-    public AuthenticationProvider: AuthenticationProvider) {
+    public AuthenticationProvider: AuthenticationProvider,
+    public firebase: FirebaseProvider) {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -46,8 +55,16 @@ export class MyApp {
       });
     });
 
+    this.AuthenticationProvider.getUserID().then(val => {
+      console.log(val)
+      if (val) {
+        // this.userID = val;
+       
+        this.curUser = this.firebase.getDocument(ENVIRONMENT.firebaseDataPaths.charity, val);
+      } else {
 
-
+      }
+    });
 
   }
 
