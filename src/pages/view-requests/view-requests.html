@@ -33,10 +33,31 @@
 
   <ion-card *ngFor='let request of requests | async'>
     <ion-card-header>
-      {{(request.userID | userFromId | async)?.firstname}}
+      {{(request.userID | userFromId | async)?.firstname}} {{(request.userID | userFromId | async)?.lastname}}
     </ion-card-header>
     <ion-card-content>
-      {{request.serviceID}}
+      <ion-item>
+        Phone: {{(request.userID | userFromId | async)?.phone}}
+      </ion-item>
+      <ion-item>
+        Email : {{(request.userID | userFromId | async)?.email}}
+      </ion-item>
+      <ion-item>
+        Requested : {{request.opened | dateTimeFormat}}
+      </ion-item>
+
+      <ion-item *ngIf="request.status != 'pending'">
+        Closed : {{request.closed | dateTimeFormat}}
+      </ion-item>
+      
+      <ion-item *ngIf="request.status == 'pending'">
+        <button ion-button block full color="primary" (click)="accept(request)">Accept</button>
+      </ion-item>
+
+      <ion-item  *ngIf="request.status == 'pending'">
+        <button ion-button block full color="danger" (click)="decline(request)">Declined</button>
+      </ion-item>
+
     </ion-card-content>
   </ion-card>
 

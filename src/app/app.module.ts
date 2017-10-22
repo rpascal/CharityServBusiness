@@ -49,7 +49,7 @@ import { RequestsProvider } from '../providers/requests/requests';
     AuthenticationProvider,
     Loader,
     ServicesProvider,
-    RequestsProvider
+    RequestsProvider,
   ]
 })
 export class AppModule {}

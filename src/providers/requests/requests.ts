@@ -1,3 +1,4 @@
+import { FirebaseProvider } from './../firebase/firebase';
 import { request } from './../../models/request';
 import { ENVIRONMENT } from './../../environments/environment.default';
 import { AngularFirestore } from 'angularfire2/firestore';
@@ -8,6 +9,8 @@ import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import 'rxjs/add/operator/switchMap';
 import 'rxjs/add/observable/combineLatest';
+
+import moment from 'moment'
 /*
   Generated class for the RequestsProvider provider.
 
@@ -19,8 +22,9 @@ export class RequestsProvider {
 
   status$: BehaviorSubject<'accepted' | 'declined' | 'pending' | null>;
 
-  constructor(public afs: AngularFirestore) {
+  constructor(public afs: AngularFirestore, public FirebaseProvider : FirebaseProvider) {
     this.status$ = new BehaviorSubject(null);
+    this.filterByStatus('pending');
   }
 
 
@@ -28,11 +32,13 @@ export class RequestsProvider {
     this.status$.next(status);
   }
 
-  getRequest(serviceID: string) : Observable<request[]> {
+  getRequest(serviceID: string): Observable<request[]> {
     return this.status$.switchMap((status) =>
       this.afs.collection(ENVIRONMENT.firebaseDataPaths.request, ref => {
         let query = ref.where('serviceID', '==', serviceID);
-        if (status) { query = ref.where('status', '==', status) };
+        if (status) { query = query.where('status', '==', status) };
+        // query  = query.orderBy("opened")
+      
         return query;
       }).snapshotChanges().map(actions => {
         return actions.map(a => {
@@ -43,6 +49,19 @@ export class RequestsProvider {
       })
     );
 
+  }
+
+  accept(request: request) {
+    request.status = 'accepted';
+    request.closed = moment().toDate();
+    this.FirebaseProvider.updateItem(ENVIRONMENT.firebaseDataPaths.request, request.id,request)
+  }
+
+  decline(request: request) {
+    request.status = 'declined';
+    request.closed = moment().toDate();
+    
+    this.FirebaseProvider.updateItem(ENVIRONMENT.firebaseDataPaths.request, request.id,request)
   }
 
 }

@@ -38,7 +38,14 @@ export class ViewRequestsPage {
 
   statusChange() {
     this.RequestsProvider.filterByStatus(this.currentStatus);
+  }
 
+  accept(request: request) {
+    this.RequestsProvider.accept(request);
+  }
+
+  decline(request: request) {
+    this.RequestsProvider.decline(request);
   }
 
 }
