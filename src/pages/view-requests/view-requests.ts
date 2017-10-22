@@ -1,3 +1,5 @@
+import { AuthenticationProvider } from './../../providers/authentication/authentication';
+import { charity } from './../../models/charity';
 import { RequestsProvider } from './../../providers/requests/requests';
 import { request } from './../../models/request';
 import { Observable } from 'rxjs/Observable';
@@ -25,11 +27,19 @@ export class ViewRequestsPage {
 
   requests: Observable<request[]>
 
+  charity: Observable<charity>;
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    public RequestsProvider: RequestsProvider) {
+    public RequestsProvider: RequestsProvider,
+    public AuthenticationProvider: AuthenticationProvider) {
     this.selectedService = navParams.data;
     this.requests = this.RequestsProvider.getRequest(this.selectedService.id);
+
+    this.AuthenticationProvider.getCurrentCharity().then(x => {
+      this.charity = x;
+    })
+
   }
 
   ionViewDidLoad() {

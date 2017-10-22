@@ -82,7 +82,10 @@ export class SignupPage {
       Zip: this.selectedLocation.Zip,
       Services: [],
       email : email,
-      isActive : true
+      isActive : true,
+      acceptedCount : 0,
+      declinedCount : 0,
+      pendingCount : 0
     }
 
     this.loader.show("Creating user...");

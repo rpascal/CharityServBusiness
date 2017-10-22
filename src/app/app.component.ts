@@ -55,16 +55,20 @@ export class MyApp {
       });
     });
 
-    this.AuthenticationProvider.getUserID().then(val => {
-      console.log(val)
-      if (val) {
-        // this.userID = val;
-       
-        this.curUser = this.firebase.getDocument(ENVIRONMENT.firebaseDataPaths.charity, val);
-      } else {
+    this.AuthenticationProvider.getCurrentCharity().then(x => {
+      this.curUser = x;
+    })
 
-      }
-    });
+    // this.AuthenticationProvider.getUserID().then(val => {
+    //   console.log(val)
+    //   if (val) {
+    //     // this.userID = val;
+       
+    //     this.curUser = this.firebase.getDocument(ENVIRONMENT.firebaseDataPaths.charity, val);
+    //   } else {
+
+    //   }
+    // });
 
   }
 

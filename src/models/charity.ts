@@ -9,4 +9,8 @@ export interface charity extends baseInterface {
     Services: string[];
     URL: string;
     email: string;
+
+    declinedCount: number;
+    acceptedCount: number;
+    pendingCount: number;
 }

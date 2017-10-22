@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs/Observable';
 import { charity } from './../../models/charity';
 import { ENVIRONMENT } from './../../environments/environment.default';
 import { FirebaseProvider } from './../firebase/firebase';
@@ -23,6 +24,15 @@ export class AuthenticationProvider {
     public firebase: FirebaseProvider) {
 
 
+
+  }
+
+  public getCurrentCharity(): Promise<Observable<charity>> {
+    return new Promise(resolve => {
+      this.getUserID().then(data => {
+        resolve(this.firebase.getDocument(ENVIRONMENT.firebaseDataPaths.charity, data))
+      });
+    });
 
   }
 
