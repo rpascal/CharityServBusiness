@@ -60,7 +60,8 @@ export class AddServicePage {
         Title: title,
         Description: description,
         MainCategory: category,
-        charityID: id
+        charityID: id,
+        isActive : true
       }
 
 

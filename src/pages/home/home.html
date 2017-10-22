@@ -21,12 +21,20 @@
   <ion-content padding>
 
 
-    <ion-card *ngFor='let service of services | async' (click)='viewRequests(service)'>
+    <ion-card *ngFor='let service of services | async'>
       <ion-card-header>
-        {{service.Title}}
+
+        <span>{{service.Title}}</span>
+        <ion-icon style="float: right;" (click)="delete(service)" name="trash">
+        </ion-icon>
+
       </ion-card-header>
       <ion-card-content>
-        {{service.Description}}
+        <ion-item>Description: {{service.Description}}</ion-item>
+        <ion-item>Category: {{service.MainCategory}}</ion-item>
+        <ion-item>
+          <button full ion-button block color="secondary" (click)='viewRequests(service)'>View Requests</button>
+        </ion-item>
       </ion-card-content>
     </ion-card>
 

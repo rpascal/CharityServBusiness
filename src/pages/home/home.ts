@@ -58,4 +58,9 @@ export class HomePage {
     this.navCtrl.push("ViewRequestsPage", service)
   }
 
+  delete(service: service) {
+    console.log(service)
+    this.firebase.disable(ENVIRONMENT.firebaseDataPaths.service, service.id, service)
+  }
+
 }

@@ -80,7 +80,8 @@ export class SignupPage {
       Street: this.selectedLocation.Street,
       City: this.selectedLocation.City,
       Zip: this.selectedLocation.Zip,
-      Services: []
+      Services: [],
+      isActive : true
     }
 
     this.loader.show("Creating user...");

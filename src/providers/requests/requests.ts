@@ -35,7 +35,7 @@ export class RequestsProvider {
   getRequest(serviceID: string): Observable<request[]> {
     return this.status$.switchMap((status) =>
       this.afs.collection(ENVIRONMENT.firebaseDataPaths.request, ref => {
-        let query = ref.where('serviceID', '==', serviceID);
+        let query = ref.where('serviceID', '==', serviceID).where("isActive", "==", true);
         if (status) { query = query.where('status', '==', status) };
         // query  = query.orderBy("opened")
       
