@@ -1,0 +1,58 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Add Service</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="addServiceFrom" (ngSubmit)="addService()">
+    <ion-list>
+      <ion-item>
+        <ion-label class="red" stacked>Title *</ion-label>
+        <ion-input type="text" formControlName="title"></ion-input>
+      </ion-item>
+      <ion-item class="form-error-list" *ngIf="addServiceFrom.controls.title.dirty && !addServiceFrom.controls.title.valid">
+        <p class="form-error" item-right *ngIf="addServiceFrom.controls.title.hasError('required')">
+          This is a required field.
+        </p>
+      </ion-item>
+
+      <ion-item>
+        <ion-label class="red" stacked>Description *</ion-label>
+        <ion-textarea formControlName="description"></ion-textarea>
+      </ion-item>
+      <ion-item class="form-error-list" *ngIf="addServiceFrom.controls.description.dirty && !addServiceFrom.controls.description.valid">
+        <p class="form-error" item-right *ngIf="addServiceFrom.controls.description.hasError('required')">
+          This is a required field.
+        </p>
+      </ion-item>
+
+      <ion-item >
+          <ion-label>Category</ion-label>
+          <ion-select  formControlName="category">
+            <ion-option *ngFor="let cat of categories | async" [value]="cat.name">{{cat.name}}</ion-option>
+          </ion-select>
+        </ion-item>
+<!-- 
+      <ion-item>
+        <button type="button" ion-button block full color="primary" (click)="selectCategory()">Select Category!</button>
+      </ion-item>
+      <ion-item *ngIf="addServiceFrom.controls.category.dirty">
+        <p item-right>
+          {{addServiceFrom.controls.category.value}}
+        </p>
+      </ion-item> -->
+      <ion-item class="form-error-list" *ngIf="addServiceFrom.controls.category.dirty && !addServiceFrom.controls.category.valid">
+
+        <p class="form-error" item-right *ngIf="addServiceFrom.controls.category.hasError('required')">
+          This is a required field.
+        </p>
+      </ion-item>
+
+    </ion-list>
+    <button type="submit" full ion-button block color="secondary" [disabled]="!addServiceFrom.valid">Add</button>
+  </form>
+</ion-content>

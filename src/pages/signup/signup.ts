@@ -1,5 +1,6 @@
+import { charity } from './../../models/charity';
 import { googleLocationsDetails } from './../../models/googleLocationDetails';
-import { charity, service } from './../../models/ItemModel';
+
 import { AuthenticationProvider } from './../../providers/authentication/authentication';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastOptions, ModalController } from 'ionic-angular';
@@ -7,6 +8,8 @@ import { Validators, FormBuilder, ValidatorFn, FormGroup } from '@angular/forms'
 import { AlertController, AlertOptions, ToastController } from 'ionic-angular';
 import { Events } from "ionic-angular";
 import { Loader } from '../../providers/loader/loader';
+
+
 @IonicPage({
   defaultHistory: ['LoginPage']
 })

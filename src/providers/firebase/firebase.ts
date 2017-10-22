@@ -1,6 +1,6 @@
 import { baseInterface } from './../../models/baseModel';
 import { Observable } from 'rxjs/Observable';
-import { AngularFirestore } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreDocument, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
@@ -12,6 +12,10 @@ export class FirebaseProvider {
   constructor(private afs: AngularFirestore) {
   }
 
+
+  public getDocument<T>(path : string, doc : string) : AngularFirestoreDocument<{}>{
+    return this.afs.collection<T>(path).doc(doc);
+  }
 
   public getCollectionList<T>(path: string, states?: any[]): Observable<T[]> {
     // .valueChanges() is simple. It just returns the 
@@ -37,7 +41,7 @@ export class FirebaseProvider {
 
   }
 
-  public getPlainSnapshot(path: string){
+  public getPlainSnapshot(path: string) {
     return this.afs.collection<any>(path).snapshotChanges();
   }
 
@@ -55,6 +59,7 @@ export class FirebaseProvider {
 
   }
 
+  
 
   public stateChange<T>(path: string, states: any[]): Observable<{ id: string, data: T }[]> {
     //['added']  "added" | "removed" | "modified"
@@ -90,16 +95,16 @@ export class FirebaseProvider {
     const item: T = Object.assign({ id: id }, object);
     return this.afs.collection<T>(path).doc(id).set(item);
   }
-  
-  setItemWithID<T extends baseInterface>(id : string, path: string, object: T) {
+
+  setItemWithID<T extends baseInterface>(id: string, path: string, object: T) {
     const item: T = Object.assign({ id: id }, object);
     return this.afs.collection<T>(path).doc(id).set(item);
   }
 
-  updateItem<T extends baseInterface>(path: string,id: string, object: T) {
+  updateItem<T extends baseInterface>(path: string, id: string, object: T) {
     return this.afs.collection<T>(path).doc(id).update(object);
   }
-  deleteItem<T extends baseInterface>(path: string,id: string, object: T) {
+  deleteItem<T extends baseInterface>(path: string, id: string, object: T) {
     return this.afs.collection<T>(path).doc(id).delete();
   }
 

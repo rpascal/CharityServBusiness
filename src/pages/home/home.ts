@@ -1,14 +1,16 @@
+import { SubjectCategory } from './../../models/subjectcategory';
+import { ServicesProvider } from './../../providers/services/services';
+import { service } from './../../models/service';
 import { AuthenticationProvider } from './../../providers/authentication/authentication';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,Content } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Content } from 'ionic-angular';
 
-import { Item, subCollection } from './../../models/ItemModel';
 import { FirebaseProvider } from './../../providers/firebase/firebase';
 import { ENVIRONMENT } from './../../environments/environment.default';
 
 import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
 import { Observable } from 'rxjs/Observable';
-import {  ViewChild } from '@angular/core';
+import { ViewChild } from '@angular/core';
 
 @IonicPage()
 @Component({
@@ -21,25 +23,19 @@ export class HomePage {
   public loggedIn: boolean = false;
 
 
-  environment: any;
+  public services: Observable<service[]>;
 
-  items: Observable<Item[]>;
 
-  constructor(public navCtrl: NavController, 
-    public AuthenticationProvider: AuthenticationProvider,    
-    private firebase: FirebaseProvider) {
-    this.environment = ENVIRONMENT.environment;
-    console.log(JSON.stringify(ENVIRONMENT))
+  constructor(public navCtrl: NavController,
+    public AuthenticationProvider: AuthenticationProvider,
+    private firebase: FirebaseProvider,
+    private ServicesProvider: ServicesProvider) {
 
-    this.items = this.firebase.getSnapshotBase<Item>("items").map(data => {
-      data.forEach(item => {
-        item.subCollection = this.firebase.getCollectionList<subCollection>(`items/${item.id}/subCollection`);
-      });
-      return data;
 
-    })
 
   }
+
+
 
   ionViewWillEnter() {
     this.AuthenticationProvider.redirectIfNotLoggedIn(this.navCtrl).then(loggedIn => {
@@ -48,17 +44,15 @@ export class HomePage {
     })
   }
 
-  public innerAdd(id) {
-    const newItem: subCollection = { blah: "Testing" + id };
-    this.firebase.setItem(`items/${id}/subCollection`, newItem);
-
+  ionViewDidLoad() {
+    this.ServicesProvider.getOwnServices().then((data: Observable<service[]>) => {
+      this.services = data;
+    })
   }
 
-  public add() {
-    const newItem: Item = { name: "Testing" };
-    this.firebase.setItem("items", newItem);
+  addService() {
+    this.navCtrl.push("AddServicePage")
   }
-
 
 
 }

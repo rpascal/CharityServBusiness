@@ -1,5 +1,5 @@
+import { charity } from './../../models/charity';
 import { ENVIRONMENT } from './../../environments/environment.default';
-import { charity } from './../../models/ItemModel';
 import { FirebaseProvider } from './../firebase/firebase';
 import { AngularFirestore } from 'angularfire2/firestore';
 import { NavController } from 'ionic-angular';
@@ -23,13 +23,27 @@ export class AuthenticationProvider {
     public firebase: FirebaseProvider) {
   }
 
+  public getUserID() : Promise<string> {
+    return new Promise((resolve, reject) => {
+      this.angularfireAuth.authState.take(1).subscribe(user => {
+        if (user) {
+          resolve(user.uid);
+        }
+        else
+          resolve(null)
+      })
+    });
+
+  }
+
+
   // public getUser() {
   //   return new Promise((resolve, reject) => {
   //     this.angularfireAuth.authState.take(1).subscribe(user => {
   //       if (user) {
-  //         this.subscriptions.push(this.db.object('/usersThirsty/' + user.uid).subscribe(data => {
-  //           resolve(data)
-  //         }));
+  //         // '/usersThirsty/' + user.uid
+  //         resolve(this.firebase.getDocument(ENVIRONMENT.firebaseDataPaths.charity, user.uid))
+  //         // this.subscriptions.push();
   //       }
   //       else
   //         resolve(null)
