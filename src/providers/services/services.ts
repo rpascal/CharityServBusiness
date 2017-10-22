@@ -19,15 +19,16 @@ export class ServicesProvider {
 
 
   getServiceCategories() {
-    return this.afs.collection<SubjectCategory>(ENVIRONMENT.firebaseDataPaths.ServiceCategories, ref => ref.orderBy("name")).snapshotChanges().map(actions => {
+    return this.afs.collection<SubjectCategory>(ENVIRONMENT.firebaseDataPaths.ServiceCategories, ref => {
+      //.where("isActive", "==", true)
+      return ref.orderBy("name");
+    }).snapshotChanges().map(actions => {
       return actions.map(a => {
         const data = a.payload.doc.data() as SubjectCategory;
         const id = a.payload.doc.id;
         return Object.assign(data, { id: id });
       })
     });
-
-    // return this.firebase.getSnapshotBase<SubjectCategory>(ENVIRONMENT.firebaseDataPaths.ServiceCategories);
   }
 
 

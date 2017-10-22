@@ -38,7 +38,7 @@ export class AddServicePage {
       category: ['', Validators.required],
     });
 
-    this.categories = this.firebase.getSnapshotBase<SubjectCategory>(ENVIRONMENT.firebaseDataPaths.ServiceCategories);
+    this.categories = this.services.getServiceCategories();//this.firebase.getSnapshotBase<SubjectCategory>(ENVIRONMENT.firebaseDataPaths.ServiceCategories);
 
   }
 
